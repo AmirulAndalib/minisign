@@ -16,21 +16,34 @@ public key:
 Compilation / installation
 --------------------------
 
-## Using [Zig](https://ziglang.org):
+## Building with Zig
 
 Dependencies:
 
-* [libsodium](https://libsodium.org/)
+* [libsodium](https://libsodium.org/) (*optional*)
+* [zig](https://ziglang.org)
 
-Compilation:
+Compilation with libsodium, dynamically linked (libsodium will need to be installed on the system for the command to run):
 
-    $ zig build -Drelease
+    $ zig build -Doptimize=ReleaseSmall
+
+Compilation with libsodium, statically linked (libsodium will only be needed for compilation):
+
+    $ zig build -Doptimize=ReleaseSmall -Dstatic
+
+Compilation without libsodium, no dependencies required:
+
+    $ zig build -Doptimize=ReleaseSmall -Dwithout-libsodium
 
 The resulting binary can be found in `zig-out/bin/minisign`.
 
-## Using cmake and gcc or clang:
+In all these examples, `ReleaseFast` can be replaced with `ReleaseSmall` to favor speed over size.
 
-* [libsodium](https://libsodium.org/)
+## Building with cmake and gcc or clang:
+
+Dependencies:
+
+* [libsodium](https://libsodium.org/) (*required*)
 * cmake
 * pkg-config
 * gcc or clang
@@ -50,6 +63,8 @@ Alternative configuration for static binaries:
 or:
 
     $ cmake -D BUILD_STATIC_EXECUTABLES=1 ..
+
+## Pre-built packages
 
 Minisign is also available in Homebrew:
 
